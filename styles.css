@@ -2,6 +2,23 @@
    KABRA - DESIGN SYSTEM & STYLES
    ========================================================================= */
 
+@font-face {
+    font-family: 'Boxing';
+    src: url('./fonts/Boxing-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Montagu Slab';
+    src: url('./fonts/MontaguSlab-VariableFont.ttf') format('truetype-variations'),
+        url('./fonts/MontaguSlab-VariableFont.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* Color Palette */
     --color-bg-dark: #252B27;
