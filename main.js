@@ -4,23 +4,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadComponents() {
     try {
-        const [headerResponse, footerResponse] = await Promise.all([
+        const [headerResponse, footerResponse, popupResponse] = await Promise.all([
             fetch('header.html'),
-            fetch('footer.html')
+            fetch('footer.html'),
+            fetch('popup.html')
         ]);
 
-        if (!headerResponse.ok || !footerResponse.ok) {
+        if (!headerResponse.ok || !footerResponse.ok || !popupResponse.ok) {
             throw new Error("Failed to load components");
         }
 
         const headerHtml = await headerResponse.text();
         const footerHtml = await footerResponse.text();
+        const popupHtml = await popupResponse.text();
 
         const headerPlaceholder = document.getElementById('header-placeholder');
         if (headerPlaceholder) headerPlaceholder.innerHTML = headerHtml;
 
         const footerPlaceholder = document.getElementById('footer-placeholder');
         if (footerPlaceholder) footerPlaceholder.innerHTML = footerHtml;
+
+        const popupPlaceholder = document.getElementById('popup-placeholder');
+        if (popupPlaceholder) popupPlaceholder.innerHTML = popupHtml;
 
         // Initialize events after components are loaded
         initializeEvents();
@@ -30,9 +35,14 @@ async function loadComponents() {
 }
 
 function initializeEvents() {
-    // Modal Close Logic
+    // Modal Logic
     const modal = document.getElementById('lead-modal');
     if (modal) {
+        // Auto-show popup (delayed by a short moment for a smoother feel)
+        setTimeout(() => {
+            modal.classList.add('active');
+        }, 800);
+
         const closeBtn = modal.querySelector('.modal-close');
         if (closeBtn) {
             closeBtn.addEventListener('click', () => modal.classList.remove('active'));
