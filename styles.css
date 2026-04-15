@@ -571,6 +571,133 @@ img {
 }
 
 /* =========================================================================
+   POPUP / MODAL
+   ========================================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 18, 16, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--ts-smooth);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--color-bg-darker);
+    padding: 2.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform var(--ts-smooth);
+    border-top: 4px solid var(--color-cta);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--color-details);
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color var(--ts-fast);
+}
+
+.modal-close:hover {
+    color: var(--color-cta);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.modal-title {
+    color: var(--color-creme);
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    margin-bottom: 0.5rem;
+}
+
+.modal-desc {
+    color: var(--color-details);
+    font-size: 1rem;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: var(--color-details);
+    font-family: var(--font-body);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: rgba(37, 43, 39, 0.8);
+    border: 1px solid var(--color-bg-dark);
+    border-radius: 4px;
+    color: var(--color-creme);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--ts-fast);
+}
+
+.form-input option {
+    background-color: var(--color-bg-darker);
+    color: var(--color-creme);
+}
+
+.form-input:focus {
+    border-color: var(--color-cta);
+}
+
+.form-input::placeholder {
+    color: rgba(204, 184, 163, 0.4);
+}
+
+.modal-btn {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* =========================================================================
    GRAFISMOS DECORATIVOS
    ========================================================================= */
 .grafismo {

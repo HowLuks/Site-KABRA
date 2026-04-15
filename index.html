@@ -145,6 +145,55 @@
     <!-- Footer Placeholder -->
     <div id="footer-placeholder"></div>
 
+    <!-- Popup Modal -->
+    <div id="lead-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Fechar pop-up">&times;</button>
+            <div class="modal-header">
+                <h3 class="modal-title">Acelere seu negócio</h3>
+                <p class="modal-desc">Preencha os dados abaixo e nossa equipe entrará em contato.</p>
+            </div>
+            <form class="modal-form" action="#" method="POST" id="lead-form">
+                <div class="form-group">
+                    <label for="lead-classificacao">Como você classifica seu momento?</label>
+                    <select id="lead-classificacao" name="classificacao" required class="form-input">
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Buscando crescimento acelerado">Buscando crescimento acelerado</option>
+                        <option value="Desejo reestruturar a marca">Desejo reestruturar a marca</option>
+                        <option value="Preciso de tráfego e vendas">Preciso de tráfego e vendas</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lead-nome">Nome Completo</label>
+                    <input type="text" id="lead-nome" name="nome" required class="form-input"
+                        placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="lead-email">E-mail Profissional</label>
+                    <input type="email" id="lead-email" name="email" required class="form-input"
+                        placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="lead-telefone">Telefone / WhatsApp</label>
+                    <input type="tel" id="lead-telefone" name="telefone" required class="form-input"
+                        placeholder="(11) 99999-9999">
+                </div>
+                <div class="form-group">
+                    <label for="lead-empresa">Nome da Empresa</label>
+                    <input type="text" id="lead-empresa" name="empresa" required class="form-input"
+                        placeholder="Sua empresa">
+                </div>
+                <div class="form-group">
+                    <label for="lead-cargo">Seu Cargo</label>
+                    <input type="text" id="lead-cargo" name="cargo" required class="form-input"
+                        placeholder="Ex: CEO, Diretor, Analista">
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit modal-btn">Enviar Solicitação</button>
+            </form>
+        </div>
+    </div>
+
     <!-- App Scripts -->
     <script src="main.js"></script>
 </body>

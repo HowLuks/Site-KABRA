@@ -30,6 +30,29 @@ async function loadComponents() {
 }
 
 function initializeEvents() {
+    // Modal Close Logic
+    const modal = document.getElementById('lead-modal');
+    if (modal) {
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        }
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Handle form submission
+        const form = document.getElementById('lead-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Formulário recebido! (Em produção, conecte à API).');
+                modal.classList.remove('active');
+                form.reset();
+            });
+        }
+    }
+
     // Simple JS for mobile menu
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const nav = document.querySelector('.nav');
@@ -51,6 +74,16 @@ function initializeEvents() {
                 if (btn) btn.classList.remove('active');
             }
             const targetId = this.getAttribute('href');
+
+            // Modal intercept
+            if (targetId === '#contato' || targetId === '#modal' || this.classList.contains('open-modal')) {
+                const modal = document.getElementById('lead-modal');
+                if (modal) {
+                    modal.classList.add('active');
+                    return;
+                }
+            }
+
             if (targetId && targetId !== '#') {
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
