@@ -4,16 +4,23 @@
 
 @font-face {
     font-family: 'Boxing';
-    src: url('./fonts/Boxing-Regular.otf') format('opentype');
-    font-weight: normal;
+    src: url('./fonts/Boxing-Regular.otf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Boxing';
+    src: url('./fonts/Boxing-Regular.otf');
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Montagu Slab';
-    src: url('./fonts/MontaguSlab-VariableFont.ttf') format('truetype-variations'),
-        url('./fonts/MontaguSlab-VariableFont.ttf') format('truetype');
+    src: url('./fonts/MontaguSlab-VariableFont.ttf');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
