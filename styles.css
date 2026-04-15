@@ -130,7 +130,7 @@ img {
     justify-content: center;
     padding: 0.8rem 1.8rem;
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 0.9rem;
     letter-spacing: 1px;
     border: none;
     cursor: pointer;
@@ -164,7 +164,7 @@ img {
 
 .btn-large {
     padding: 1.2rem 2.8rem;
-    font-size: 1.15rem;
+    font-size: 1rem;
 }
 
 /* =========================================================================
@@ -207,7 +207,7 @@ img {
 .nav-link {
     font-family: var(--font-body);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--color-details);
     position: relative;
 }
@@ -276,13 +276,13 @@ img {
 }
 
 .hero-title {
-    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-size: clamp(2.2rem, 5vw, 4rem);
     margin-bottom: 1.5rem;
     color: var(--color-creme);
 }
 
 .hero-subtitle {
-    font-size: clamp(1rem, 2vw, 1.15rem);
+    font-size: 1rem;
     color: var(--color-details);
     max-width: 600px;
     margin-bottom: 3rem;
@@ -342,7 +342,7 @@ img {
 }
 
 .section-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(1.8rem, 4vw, 3rem);
     margin-bottom: 1rem;
 }
 
@@ -353,7 +353,7 @@ img {
 }
 
 .manifesto-body {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.8;
 }
 
@@ -362,7 +362,7 @@ img {
 }
 
 .manifesto-body .lead-text {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 600;
     color: var(--color-cta);
 }
@@ -427,14 +427,14 @@ img {
 }
 
 .service-title {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     margin-bottom: 1rem;
     color: var(--color-creme);
 }
 
 .service-text {
     color: var(--color-details);
-    font-size: 1rem;
+    font-size: 0.95rem;
 }
 
 /* =========================================================================
@@ -452,12 +452,12 @@ img {
 }
 
 .cta-title {
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
     margin-bottom: 1.5rem;
 }
 
 .cta-desc {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--color-details);
     margin-bottom: 3rem;
 }
@@ -523,7 +523,7 @@ img {
 .footer h4 {
     font-family: var(--font-heading);
     color: var(--color-creme);
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
 
@@ -655,7 +655,7 @@ img {
     }
 
     .hero-title {
-        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
     }
 
     .grafismo {
@@ -701,7 +701,7 @@ img {
     }
 
     .nav-link {
-        font-size: 1.5rem;
+        font-size: 1.15rem;
     }
 
     .nav-cta {
