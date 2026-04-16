@@ -53,39 +53,87 @@ function initializeEvents() {
 
         // Handle form submission (Popup)
         const form = document.getElementById('lead-form');
+        let currentLeadId = null;
+
         if (form) {
+            const step1 = document.getElementById('form-step-1');
+            const step2 = document.getElementById('form-step-2');
+            const btnNext = document.getElementById('btn-next-step');
+
+            // Handle step 1 to step 2 transition
+            if (btnNext) {
+                btnNext.addEventListener('click', async () => {
+                    const emailInput = form.querySelector('input[name="email"]');
+                    const nomeInput = form.querySelector('input[name="nome"]');
+                    const telInput = form.querySelector('input[name="telefone"]');
+
+                    // HTML5 validation for Step 1
+                    if (!emailInput.reportValidity() || !nomeInput.reportValidity() || !telInput.reportValidity()) return;
+
+                    const origText = btnNext.textContent;
+                    btnNext.disabled = true;
+                    btnNext.textContent = "Salvando...";
+
+                    if (window.supabaseClient) {
+                        try {
+                            const { data, error } = await window.supabaseClient.from('submissions').insert([{
+                                email: emailInput.value,
+                                name: nomeInput.value,
+                                phone: telInput.value,
+                                origin: 'popup',
+                                status: 'new',
+                                completed_second_step: false
+                            }]).select();
+
+                            if (data && data.length > 0) {
+                                currentLeadId = data[0].id;
+                            }
+                        } catch (err) {
+                            console.error('Erro ao salvar etapa 1', err);
+                        }
+                    } else {
+                        console.warn('Supabase não conectado na etapa 1.');
+                    }
+
+                    // Prossiga para a etapa 2 de qualquer forma
+                    btnNext.textContent = origText;
+                    btnNext.disabled = false;
+                    step1.style.display = 'none';
+                    step2.style.display = 'block';
+                });
+            }
+
+            // Handle Final Submission (Step 2)
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                const btnSubmit = form.querySelector('.btn-submit');
+                const btnSubmit = document.getElementById('btn-final-step');
                 const origText = btnSubmit ? btnSubmit.textContent : '';
                 if (btnSubmit) { btnSubmit.disabled = true; btnSubmit.textContent = "Aguarde..."; }
 
-                const emailInput = form.querySelector('input[name="email"]');
-                const nomeInput = form.querySelector('input[name="nome"]');
-                const telInput = form.querySelector('input[name="telefone"]');
                 const empInput = form.querySelector('input[name="empresa"]');
                 const cargoInput = form.querySelector('input[name="cargo"]');
                 const classif = form.querySelector('select[name="classificacao"]');
+                const investimento = form.querySelector('select[name="investimento"]');
+                const faturamento = form.querySelector('select[name="faturamento"]');
 
-                if (window.supabaseClient) {
-                    await window.supabaseClient.from('submissions').insert([{
-                        email: emailInput ? emailInput.value : '',
-                        name: nomeInput ? nomeInput.value : '',
-                        phone: telInput ? telInput.value : '',
+                if (window.supabaseClient && currentLeadId) {
+                    await window.supabaseClient.from('submissions').update({
                         company: empInput ? empInput.value : '',
                         role: cargoInput ? cargoInput.value : '',
                         classification: classif ? classif.value : '',
-                        origin: 'popup',
-                        status: 'new'
-                    }]);
-                } else {
-                    console.warn('Supabase não conectado. Não foi possível inserir dados no banco.');
+                        investment_plan: investimento ? investimento.value : '',
+                        average_revenue: faturamento ? faturamento.value : '',
+                        completed_second_step: true
+                    }).eq('id', currentLeadId);
                 }
 
                 alert('Obrigado! Entraremos em contato em breve.');
                 modal.classList.remove('active');
                 form.reset();
+                currentLeadId = null;
+                step1.style.display = 'block';
+                step2.style.display = 'none';
                 if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
             });
         }

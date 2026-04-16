@@ -6,42 +6,73 @@
             <p class="modal-desc">Preencha os dados abaixo e nossa equipe entrará em contato.</p>
         </div>
         <form class="modal-form" action="#" method="POST" id="lead-form">
-            <div class="form-group">
-                <label for="lead-classificacao">Como você classifica seu momento?</label>
-                <select id="lead-classificacao" name="classificacao" required class="form-input">
-                    <option value="" disabled selected>Selecione uma opção</option>
-                    <option value="Buscando crescimento acelerado">Buscando crescimento acelerado</option>
-                    <option value="Desejo reestruturar a marca">Desejo reestruturar a marca</option>
-                    <option value="Preciso de tráfego e vendas">Preciso de tráfego e vendas</option>
-                    <option value="Outro">Outro</option>
-                </select>
+            <!-- ETAPA 1 -->
+            <div id="form-step-1">
+                <div class="form-group">
+                    <label for="lead-nome">Nome Completo</label>
+                    <input type="text" id="lead-nome" name="nome" required class="form-input"
+                        placeholder="Seu nome completo">
+                </div>
+                <div class="form-group">
+                    <label for="lead-email">E-mail Profissional</label>
+                    <input type="email" id="lead-email" name="email" required class="form-input"
+                        placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="lead-telefone">Telefone / WhatsApp</label>
+                    <input type="tel" id="lead-telefone" name="telefone" required class="form-input"
+                        placeholder="(11) 99999-9999">
+                </div>
+                <button type="button" id="btn-next-step" class="btn btn-primary btn-submit modal-btn">Continuar</button>
             </div>
-            <div class="form-group">
-                <label for="lead-nome">Nome Completo</label>
-                <input type="text" id="lead-nome" name="nome" required class="form-input"
-                    placeholder="Seu nome completo">
+
+            <!-- ETAPA 2 -->
+            <div id="form-step-2" style="display: none;">
+                <div class="form-group">
+                    <label for="lead-empresa">Nome da Empresa</label>
+                    <input type="text" id="lead-empresa" name="empresa" required class="form-input"
+                        placeholder="Sua empresa">
+                </div>
+                <div class="form-group">
+                    <label for="lead-cargo">Seu Cargo</label>
+                    <input type="text" id="lead-cargo" name="cargo" required class="form-input"
+                        placeholder="Ex: CEO, Diretor, Analista">
+                </div>
+                <div class="form-group">
+                    <label for="lead-classificacao">Como se identifica no momento?</label>
+                    <select id="lead-classificacao" name="classificacao" required class="form-input">
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Buscando crescimento acelerado">Buscando crescimento acelerado</option>
+                        <option value="Desejo reestruturar a marca">Desejo reestruturar a marca</option>
+                        <option value="Preciso de tráfego e vendas">Preciso de tráfego e vendas</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lead-investimento">Quanto planeja investir no momento?</label>
+                    <select id="lead-investimento" name="investimento" required class="form-input">
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Até 5 mil">Até 5 mil</option>
+                        <option value="Entre 5-10 mil">Entre 5 e 10 mil</option>
+                        <option value="Entre 10-50 mil">Entre 10 e 50 mil</option>
+                        <option value="Entre 50-100 mil">Entre 50 e 100 mil</option>
+                        <option value="+100k">Mais de 100 mil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lead-faturamento">Qual o faturamento médio da empresa?</label>
+                    <select id="lead-faturamento" name="faturamento" required class="form-input">
+                        <option value="" disabled selected>Selecione uma opção</option>
+                        <option value="Até 5 mil">Até 5 mil</option>
+                        <option value="Entre 5-10 mil">Entre 5 e 10 mil</option>
+                        <option value="Entre 10-50 mil">Entre 10 e 50 mil</option>
+                        <option value="Entre 50-100 mil">Entre 50 e 100 mil</option>
+                        <option value="+100k">Mais de 100 mil</option>
+                    </select>
+                </div>
+                <button type="submit" id="btn-final-step" class="btn btn-primary btn-submit modal-btn">Enviar
+                    Solicitação</button>
             </div>
-            <div class="form-group">
-                <label for="lead-email">E-mail Profissional</label>
-                <input type="email" id="lead-email" name="email" required class="form-input"
-                    placeholder="seu@email.com">
-            </div>
-            <div class="form-group">
-                <label for="lead-telefone">Telefone / WhatsApp</label>
-                <input type="tel" id="lead-telefone" name="telefone" required class="form-input"
-                    placeholder="(11) 99999-9999">
-            </div>
-            <div class="form-group">
-                <label for="lead-empresa">Nome da Empresa</label>
-                <input type="text" id="lead-empresa" name="empresa" required class="form-input"
-                    placeholder="Sua empresa">
-            </div>
-            <div class="form-group">
-                <label for="lead-cargo">Seu Cargo</label>
-                <input type="text" id="lead-cargo" name="cargo" required class="form-input"
-                    placeholder="Ex: CEO, Diretor, Analista">
-            </div>
-            <button type="submit" class="btn btn-primary btn-submit modal-btn">Enviar Solicitação</button>
         </form>
     </div>
 </div>

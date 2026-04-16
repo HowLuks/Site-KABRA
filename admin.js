@@ -196,6 +196,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 else console.error(error);
             });
         });
+
+        document.querySelectorAll('.view-details-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const sub = submissions.find(s => s.id == id);
+                if (sub) {
+                    showDetailsModal(sub);
+                }
+            });
+        });
     }
 
     function generateSubmissionsTable(list, showActions) {
@@ -218,11 +228,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </span>
                 </td>
                 ${showActions ? `
-                <td>
+                <td style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; min-height: 48px;">
                     ${sub.status === 'new' ?
                         `<button class="btn btn-outline mark-read-btn" data-id="${sub.id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Marcar Visto</button>`
                         : `<span style="color:var(--color-details); font-size:0.8rem;">Analisado</span>`
                     }
+                    <button class="btn btn-outline view-details-btn" data-id="${sub.id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Ver Detalhes</button>
                 </td>` : ''}
             </tr>
             `;
@@ -235,6 +246,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <tbody>${rows}</tbody>
                 </table>
             </div>`;
+    }
+
+    function showDetailsModal(sub) {
+        const modalHtml = `
+        <div id="details-modal" class="modal-overlay active" style="display: flex; align-items: center; justify-content: center; z-index: 10000; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);">
+            <div class="modal-content" style="max-height: 90vh; overflow-y: auto; background: var(--color-bg-dark); padding: 2rem; border-radius: 8px; width: 400px; max-width: 90%; position: relative;">
+                <button class="modal-close" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; color: #fff; cursor: pointer;" onclick="document.getElementById('details-modal').remove()">&times;</button>
+                <h3 style="margin-bottom: 20px; color: var(--color-cta);">Detalhes do Lead</h3>
+                <div style="font-size: 0.9rem; line-height: 1.6; color: var(--color-text);">
+                    <p><strong>Nome:</strong> ${sub.name || '-'}</p>
+                    <p><strong>E-mail:</strong> ${sub.email || '-'}</p>
+                    <p><strong>Telefone:</strong> ${sub.phone || '-'}</p>
+                    <p style="margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1);"><strong>Empresa:</strong> ${sub.company || '-'}</p>
+                    <p><strong>Cargo:</strong> ${sub.role || '-'}</p>
+                    <p><strong>Momento:</strong> ${sub.classification || '-'}</p>
+                    <p><strong>Investimento:</strong> ${sub.investment_plan || '-'}</p>
+                    <p><strong>Faturamento:</strong> ${sub.average_revenue || '-'}</p>
+                    <p style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px; color: ${sub.completed_second_step ? '#4caf50' : '#f44336'};">
+                        <strong>Completou Etapa 2?</strong> ${sub.completed_second_step ? 'Sim' : 'Não'}
+                    </p>
+                </div>
+            </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
     }
 
     // -- Blogs --
