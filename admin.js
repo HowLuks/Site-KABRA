@@ -295,8 +295,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         formContainer.style.display = 'block';
 
         formContainer.innerHTML = `
-            <form id="new-blog-form" class="admin-form">
-                <h3>Criar Novo Artigo</h3>
+            <form id="new-blog-form" class="admin-form" style="max-width: 800px; margin: 0 auto;">
+                <h3 style="text-align: center; margin-bottom: 2rem;">Criar Novo Artigo</h3>
                 <div class="form-group">
                     <label>Título do Post</label>
                     <input type="text" id="blog-title" class="form-input" required placeholder="Ex: O Futuro do Growth Hacking">
