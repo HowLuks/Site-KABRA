@@ -1,0 +1,231 @@
+/* =========================================================================
+   KABRA - ADMIN DASHBOARD STYLES
+   ========================================================================= */
+
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--color-bg-darker);
+}
+
+.admin-sidebar {
+    width: 280px;
+    background-color: var(--color-bg-dark);
+    padding: 2rem;
+    border-right: 1px solid rgba(242, 236, 218, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    margin-bottom: 3rem;
+}
+
+.admin-badge {
+    background-color: var(--color-cta);
+    color: var(--color-creme);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-nav .nav-link {
+    font-size: 1.05rem;
+    padding: 0.8rem 1rem;
+    color: var(--color-details);
+    border-radius: 6px;
+}
+
+.sidebar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--color-creme);
+}
+
+.sidebar-nav .nav-link.active {
+    background-color: rgba(255, 71, 25, 0.1);
+    color: var(--color-cta);
+    font-weight: bold;
+}
+
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.admin-header {
+    padding: 2rem;
+    background-color: var(--color-bg-dark);
+    border-bottom: 1px solid rgba(242, 236, 218, 0.05);
+}
+
+.text-creme {
+    color: var(--color-creme) !important;
+}
+
+.admin-content {
+    padding: 2.5rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Dashboard Grid Component */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: var(--color-bg-dark);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-top: 4px solid var(--color-cta);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-title {
+    color: var(--color-details);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    color: var(--color-creme);
+    font-size: 2.5rem;
+    font-family: var(--font-heading);
+}
+
+/* Admin Data Table */
+.data-table-container {
+    background-color: var(--color-bg-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 1.2rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(242, 236, 218, 0.05);
+    font-size: 0.95rem;
+}
+
+.admin-table th {
+    color: var(--color-details);
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+.badge {
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    background-color: rgba(204, 184, 163, 0.2);
+    color: var(--color-details);
+}
+
+.badge.new {
+    background-color: rgba(255, 71, 25, 0.2);
+    color: var(--color-cta);
+}
+
+/* Page Headers / Actions */
+.view-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.view-header-actions h2 {
+    font-family: var(--font-heading);
+    color: var(--color-creme);
+    font-size: 1.8rem;
+}
+
+.empty-state {
+    color: var(--color-details);
+    text-align: center;
+    padding: 4rem 2rem;
+    background-color: var(--color-bg-dark);
+    border-radius: 8px;
+}
+
+/* Forms in Admin */
+.admin-form {
+    background-color: var(--color-bg-dark);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-form label {
+    color: var(--color-details);
+    font-size: 0.9rem;
+}
+
+.admin-form textarea.form-input {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Overriding global scrollbar visually for inside admin content */
+.admin-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.admin-content::-webkit-scrollbar-track {
+    background: var(--color-bg-darker);
+}
+
+.admin-content::-webkit-scrollbar-thumb {
+    background: var(--color-details);
+    border-radius: 4px;
+}

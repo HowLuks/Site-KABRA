@@ -51,14 +51,67 @@ function initializeEvents() {
             if (e.target === modal) modal.classList.remove('active');
         });
 
-        // Handle form submission
+        // Handle form submission (Popup)
         const form = document.getElementById('lead-form');
         if (form) {
-            form.addEventListener('submit', (e) => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                alert('Formulário recebido! (Em produção, conecte à API).');
+
+                const btnSubmit = form.querySelector('.btn-submit');
+                const origText = btnSubmit ? btnSubmit.textContent : '';
+                if (btnSubmit) { btnSubmit.disabled = true; btnSubmit.textContent = "Aguarde..."; }
+
+                const emailInput = form.querySelector('input[name="email"]');
+                const nomeInput = form.querySelector('input[name="nome"]');
+                const telInput = form.querySelector('input[name="telefone"]');
+                const empInput = form.querySelector('input[name="empresa"]');
+                const cargoInput = form.querySelector('input[name="cargo"]');
+                const classif = form.querySelector('select[name="classificacao"]');
+
+                if (window.supabaseClient) {
+                    await window.supabaseClient.from('submissions').insert([{
+                        email: emailInput ? emailInput.value : '',
+                        name: nomeInput ? nomeInput.value : '',
+                        phone: telInput ? telInput.value : '',
+                        company: empInput ? empInput.value : '',
+                        role: cargoInput ? cargoInput.value : '',
+                        classification: classif ? classif.value : '',
+                        origin: 'popup',
+                        status: 'new'
+                    }]);
+                } else {
+                    console.warn('Supabase não conectado. Não foi possível inserir dados no banco.');
+                }
+
+                alert('Obrigado! Entraremos em contato em breve.');
                 modal.classList.remove('active');
                 form.reset();
+                if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
+            });
+        }
+
+        // CTA Form Setup
+        const ctaForm = document.getElementById('cta-form');
+        if (ctaForm) {
+            ctaForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const btnSubmit = ctaForm.querySelector('.btn-submit');
+                const origText = btnSubmit ? btnSubmit.textContent : '';
+                if (btnSubmit) { btnSubmit.disabled = true; btnSubmit.textContent = "Aguarde..."; }
+
+                const emailInput = ctaForm.querySelector('input[type="email"]');
+                if (window.supabaseClient && emailInput && emailInput.value) {
+                    await window.supabaseClient.from('submissions').insert([{
+                        email: emailInput.value,
+                        origin: 'cta-header',
+                        status: 'new'
+                    }]);
+                }
+
+                alert('Obrigado! Nossa equipe vai acelerar com você em breve.');
+                ctaForm.reset();
+                if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
             });
         }
     }

@@ -1,0 +1,18 @@
+# Ambiente / Segredos
+.env
+.env.*
+supabase_schema.sql
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependências (caso um dia use Node)
+node_modules/
+package-lock.json
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+supabase_schema.sql

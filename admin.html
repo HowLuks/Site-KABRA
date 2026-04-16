@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KABRA | Painel Admin</title>
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+
+    <!-- Overlay de Login Supabase -->
+    <div id="login-overlay"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--color-bg-darker); z-index: 9999;">
+        <h2 class="logo" style="margin-bottom: 2rem;">KABRA ADMIN</h2>
+        <form id="admin-login-form" class="admin-form" style="width: 90%; max-width: 400px; text-align: left;">
+            <p style="margin-bottom: 1rem; color: var(--color-details); text-align: center;">Área restrita. Faça login
+                para continuar.</p>
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>E-mail</label>
+                <input type="email" id="login-email" class="form-input" required placeholder="seu@email.com">
+            </div>
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label>Senha</label>
+                <input type="password" id="login-password" class="form-input" required placeholder="Sua senha secreta">
+            </div>
+            <button type="submit" id="btn-login-submit" class="btn btn-primary"
+                style="width: 100%; justify-content: center;">Entrar no Painel</button>
+            <p id="login-error"
+                style="color: #ff4d4d; margin-top: 1rem; text-align: center; font-size: 0.9rem; display: none;"></p>
+        </form>
+    </div>
+
+    <!-- Interface (escondida pelo script até logar) -->
+    <div class="admin-wrapper" id="admin-interface" style="display: none;">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2 class="logo">KABRA</h2>
+                <div style="margin-top: 5px;"><span class="admin-badge">Painel Admin</span></div>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <a href="#" class="nav-link active" data-view="dashboard">Visão Geral</a>
+                <a href="#" class="nav-link" data-view="submissions">Leads Cadastrados</a>
+                <a href="#" class="nav-link" data-view="blogs">Artigos do Blog</a>
+                <div style="flex-grow: 1;"></div>
+                <a href="#" id="btn-logout" class="nav-link"
+                    style="color: #ff4d4d; font-size: 0.95rem; display: flex; align-items: center;">🔓 Fazer Logout</a>
+                <a href="index.html" class="nav-link back-link" style="margin-top: 1rem;">← Voltar ao Site</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1 id="view-title" class="section-title text-creme" style="margin-bottom:0; font-size: 2rem;">Visão
+                    Geral</h1>
+            </header>
+
+            <div class="admin-content" id="view-content">
+                <!-- Inject views via JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- SDK do Supabase e Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>
