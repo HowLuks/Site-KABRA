@@ -310,8 +310,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <input type="text" id="blog-excerpt" class="form-input" required placeholder="Escreva uma breve descrição...">
                 </div>
                 <div class="form-group">
-                    <label>Conteúdo</label>
-                    <textarea id="blog-body" class="form-input" required placeholder="Escreva o conteúdo completo aqui..."></textarea>
+                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                        Conteúdo 
+                        <span style="font-size:0.8rem; color:var(--color-details); font-weight:normal;">Suporta formatação padrão (Markdown)</span>
+                    </label>
+                    <div style="background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--color-details); border: 1px solid rgba(255,255,255,0.05); line-height: 1.6;">
+                        <strong style="color:var(--color-creme)">Guia Rápido de Formatação:</strong><br>
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">#</code> Título H1 &nbsp;|&nbsp; 
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">##</code> Subtítulo H2 &nbsp;|&nbsp; 
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">###</code> Título Menor H3<br>
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">**</code><strong>Texto Negrito</strong><code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">**</code> &nbsp;|&nbsp; 
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">*</code><em>Texto Itálico</em><code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">*</code> &nbsp;|&nbsp; 
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">-</code> Item de Lista<br>
+                        <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">[Texto do Link](https://site.com)</code> para inserir links externos.<br>
+                        <i style="opacity:0.7; font-size: 0.8rem; display:block; margin-top:5px;">💡 Pule sempre uma linha em branco para criar um novo parágrafo.</i>
+                    </div>
+                    <textarea id="blog-body" class="form-input" required placeholder="Escreva o conteúdo do artigo..." style="min-height: 400px; font-family: Consolas, monospace; font-size: 0.95rem; line-height: 1.5;"></textarea>
                 </div>
                 <div class="action-buttons">
                     <button type="submit" id="btn-publish-blog" class="btn btn-primary">Publicar</button>

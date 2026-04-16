@@ -109,6 +109,8 @@ img {
     width: 90%;
     max-width: var(--container-max);
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .text-accent {
@@ -740,7 +742,7 @@ img {
 .grafismo-2 {
     width: 450px;
     height: 450px;
-    background-image: url('img/Kabra_icones_cacto_verde.png');
+    background-image: url('img/Kabra_icones_cacto_bege.png');
     bottom: -150px;
     left: -100px;
     transform: rotate(10deg);

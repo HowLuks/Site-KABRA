@@ -96,6 +96,7 @@
     <div id="popup-placeholder"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="config.js"></script>
     <script src="main.js"></script>
     <script>
@@ -125,20 +126,8 @@
             const dateStr = new Date(data.created_at).toLocaleDateString('pt-BR');
             const imgHtml = data.image_url ? `<div class="post-cover-wrapper"><img src="${data.image_url}" class="post-cover" alt="Capa"></div>` : '';
 
-            // Format content: Simple Markdown to HTML
-            // Quebras de linha são tratadas identificando headers com hash e strong com ast.
-            const lines = data.content.split('\\n');
-            const formattedContent = lines.map(p => {
-                let text = p.trim();
-                if (text === '') return '';
-                // Headers básicos
-                if (text.startsWith('## ')) return `<h2>${text.replace('## ', '')}</h2>`;
-                if (text.startsWith('# ')) return `<h2>${text.replace('# ', '')}</h2>`;
-                if (text.startsWith('### ')) return `<h3>${text.replace('### ', '')}</h3>`;
-
-                // Tratar negrito primitivo com asterisco (*) só pro básico do txt do input HTML
-                return `<p>${text}</p>`;
-            }).join('');
+            // Format content using Marked.js for full markdown support
+            const formattedContent = marked.parse(data.content || '');
 
             container.innerHTML = `
                 <section class="post-header">
