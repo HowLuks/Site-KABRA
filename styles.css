@@ -204,6 +204,9 @@ img {
 .nav-list {
     display: flex;
     gap: 2rem;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .nav-link {
@@ -828,6 +831,9 @@ img {
         gap: 1.5rem;
         margin-bottom: 2rem;
         width: 100%;
+        position: relative;
+        left: auto;
+        transform: none;
     }
 
     .nav-link {
