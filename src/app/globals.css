@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-dark: #252B27;
+  --color-bg-darker: #36423A;
+  --color-creme: #F2ECDA;
+  --color-details: #CCB8A3;
+  --color-cta: #FF4719;
+  --color-cta-hover: #e03810;
+
+  --font-heading: "Boxing", "Teko", "Impact", sans-serif;
+  --font-body: "Montagu Slab", serif;
+}
+
+@layer base {
+  @font-face {
+    font-family: 'Boxing';
+    src: url('/fonts/Boxing-Regular.otf');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Boxing';
+    src: url('/fonts/Boxing-Regular.otf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Montagu Slab';
+    src: url('/fonts/MontaguSlab-VariableFont.ttf');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    background-color: var(--color-bg-dark);
+    color: var(--color-creme);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* Grafismos (decorations that might be used later on) */
+@layer utilities {
+  .text-accent {
+    color: var(--color-cta);
+  }
+
+  .grafismo-passaro {
+    background-image: url('/img/Kabra_icones_ave_laranja.png');
+  }
+
+  .grafismo-4 {
+    background-image: url('/img/Kabra_icones_arbusto_cinza.png');
+  }
+
+  .grafismo-1 {
+    background-image: url('/img/Kabra_icones_sol_bege.png');
+  }
+
+  .grafismo-2 {
+    background-image: url('/img/Kabra_icones_cacto_bege.png');
+  }
+
+  .grafismo-3 {
+    background-image: url('/img/Kabra_icones_raio_laranja.png');
+  }
+}
