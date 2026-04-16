@@ -251,7 +251,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div id="blog-form-container" style="display: none;"></div>
         `;
 
-        document.getElementById('add-blog-btn').addEventListener('click', showBlogForm);
+        document.getElementById('add-blog-btn').addEventListener('click', () => showBlogForm());
+
+        document.querySelectorAll('.btn-edit-blog').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const blog = blogs.find(b => b.id == id);
+                if (blog) showBlogForm(blog);
+            });
+        });
 
         document.querySelectorAll('.btn-delete-blog').forEach(btn => {
             btn.addEventListener('click', async (e) => {
@@ -274,7 +282,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <td>${dateStr}</td>
                 <td><strong>${blog.title}</strong></td>
                 <td><span class="badge ${blog.published ? '' : 'new'}">${blog.published ? 'Publicado' : 'Rascunho'}</span></td>
-                <td><button class="btn btn-outline btn-delete-blog" data-id="${blog.id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Excluir</button></td>
+                <td style="display:flex; gap:0.5rem; align-items:center;">
+                    <button class="btn btn-outline btn-edit-blog" data-id="${blog.id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem; border-color: var(--color-cta); color: var(--color-cta);">Editar</button>
+                    <button class="btn btn-outline btn-delete-blog" data-id="${blog.id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">Excluir</button>
+                </td>
             </tr>`;
         }).join('');
 
@@ -287,7 +298,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>`;
     }
 
-    function showBlogForm() {
+    function showBlogForm(editBlog = null) {
         document.getElementById('blog-list-container').style.display = 'none';
         document.getElementById('add-blog-btn').style.display = 'none';
 
@@ -295,19 +306,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         formContainer.style.display = 'block';
 
         formContainer.innerHTML = `
-            <form id="new-blog-form" class="admin-form" style="max-width: 800px; margin: 0 auto;">
-                <h3 style="text-align: center; margin-bottom: 2rem;">Criar Novo Artigo</h3>
+            <form id="new-blog-form" class="admin-form" style="max-width: 800px; margin: 0 auto;" data-edit-id="${editBlog ? editBlog.id : ''}">
+                <h3 style="text-align: center; margin-bottom: 2rem;">${editBlog ? 'Editar Artigo' : 'Criar Novo Artigo'}</h3>
                 <div class="form-group">
                     <label>Título do Post</label>
-                    <input type="text" id="blog-title" class="form-input" required placeholder="Ex: O Futuro do Growth Hacking">
+                    <input type="text" id="blog-title" class="form-input" required placeholder="Ex: O Futuro do Growth Hacking" value="${editBlog ? editBlog.title.replace(/"/g, '&quot;') : ''}">
                 </div>
                 <div class="form-group">
                     <label>URL / Link da Imagem de Capa</label>
-                    <input type="url" id="blog-image" class="form-input" placeholder="https://site.com/imagem.jpg">
+                    <input type="url" id="blog-image" class="form-input" placeholder="https://site.com/imagem.jpg" value="${editBlog && editBlog.image_url ? editBlog.image_url : ''}">
                 </div>
                 <div class="form-group">
                     <label>Resumo</label>
-                    <input type="text" id="blog-excerpt" class="form-input" required placeholder="Escreva uma breve descrição...">
+                    <input type="text" id="blog-excerpt" class="form-input" required placeholder="Escreva uma breve descrição..." value="${editBlog && editBlog.excerpt ? editBlog.excerpt.replace(/"/g, '&quot;') : ''}">
                 </div>
                 <div class="form-group">
                     <label style="display:flex; justify-content:space-between; align-items:center;">
@@ -325,10 +336,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <code style="background:rgba(0,0,0,0.3); padding:2px 4px; border-radius:3px; color:#ff8a66">[Texto do Link](https://site.com)</code> para inserir links externos.<br>
                         <i style="opacity:0.7; font-size: 0.8rem; display:block; margin-top:5px;">💡 Pule sempre uma linha em branco para criar um novo parágrafo.</i>
                     </div>
-                    <textarea id="blog-body" class="form-input" required placeholder="Escreva o conteúdo do artigo..." style="min-height: 400px; font-family: Consolas, monospace; font-size: 0.95rem; line-height: 1.5;"></textarea>
+                    <textarea id="blog-body" class="form-input" required placeholder="Escreva o conteúdo do artigo..." style="min-height: 400px; font-family: Consolas, monospace; font-size: 0.95rem; line-height: 1.5;">${editBlog ? editBlog.content : ''}</textarea>
                 </div>
                 <div class="action-buttons">
-                    <button type="submit" id="btn-publish-blog" class="btn btn-primary">Publicar</button>
+                    <button type="submit" id="btn-publish-blog" class="btn btn-primary">${editBlog ? 'Salvar Edição' : 'Publicar'}</button>
                     <button type="button" class="btn btn-outline" id="cancel-blog-btn">Cancelar</button>
                 </div>
             </form>
@@ -342,19 +353,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.disabled = true;
             btn.textContent = "Salvando no Banco...";
 
+            const editId = e.target.getAttribute('data-edit-id');
             const title = document.getElementById('blog-title').value;
             const excerpt = document.getElementById('blog-excerpt').value;
             const content = document.getElementById('blog-body').value;
             const image_url = document.getElementById('blog-image').value;
 
-            const { error } = await supabaseClient.from('blogs').insert([{
-                title, excerpt, content, image_url, published: true, author_id: currentUser?.id
-            }]);
+            let errorObj = null;
 
-            if (error) {
-                alert("Erro ao publicar: " + error.message);
+            if (editId) {
+                // Atualizar
+                const { error } = await supabaseClient.from('blogs').update({
+                    title, excerpt, content, image_url
+                }).eq('id', editId);
+                errorObj = error;
+            } else {
+                // Inserir
+                const { error } = await supabaseClient.from('blogs').insert([{
+                    title, excerpt, content, image_url, published: true, author_id: currentUser?.id
+                }]);
+                errorObj = error;
+            }
+
+            if (errorObj) {
+                alert("Erro ao salvar: " + errorObj.message);
                 btn.disabled = false;
-                btn.textContent = "Publicar";
+                btn.textContent = editId ? "Salvar Edição" : "Publicar";
             } else {
                 renderView('blogs');
             }
