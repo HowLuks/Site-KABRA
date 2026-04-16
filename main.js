@@ -88,7 +88,12 @@ function initializeEvents() {
                             if (data && data.length > 0) {
                                 currentLeadId = data[0].id;
                             }
+                            if (error) {
+                                alert("Erro Supabase Etapa 1: " + error.message);
+                                console.error('Erro detalhado etapa 1:', error);
+                            }
                         } catch (err) {
+                            alert("Erro de código na etapa 1: " + err.message);
                             console.error('Erro ao salvar etapa 1', err);
                         }
                     } else {
@@ -118,7 +123,7 @@ function initializeEvents() {
                 const faturamento = form.querySelector('select[name="faturamento"]');
 
                 if (window.supabaseClient && currentLeadId) {
-                    await window.supabaseClient.from('submissions').update({
+                    const { error } = await window.supabaseClient.from('submissions').update({
                         company: empInput ? empInput.value : '',
                         role: cargoInput ? cargoInput.value : '',
                         classification: classif ? classif.value : '',
@@ -126,6 +131,13 @@ function initializeEvents() {
                         average_revenue: faturamento ? faturamento.value : '',
                         completed_second_step: true
                     }).eq('id', currentLeadId);
+
+                    if (error) {
+                        alert("Erro Supabase Etapa 2: " + error.message);
+                        console.error("Erro detalhado etapa 2:", error);
+                    }
+                } else if (window.supabaseClient && !currentLeadId) {
+                    alert("ID não encontrado. A etapa 1 deve ter falhado.");
                 }
 
                 alert('Obrigado! Entraremos em contato em breve.');
