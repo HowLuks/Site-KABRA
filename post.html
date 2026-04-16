@@ -59,6 +59,14 @@
             margin-bottom: 1.5rem;
         }
 
+        .post-body h1 {
+            font-size: 2.5rem;
+            color: var(--color-creme);
+            margin: 3rem 0 1.5rem;
+            border-bottom: 1px solid rgba(242, 236, 218, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
         .post-body h2 {
             font-size: 2.2rem;
             color: var(--color-cta);
@@ -70,8 +78,33 @@
             margin: 2.5rem 0 1rem;
         }
 
+        .post-body h4,
+        .post-body h5,
+        .post-body h6 {
+            color: var(--color-creme);
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .post-body ul,
+        .post-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            color: var(--color-details);
+        }
+
+        .post-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .post-body a {
+            color: var(--color-cta);
+            text-decoration: underline;
+        }
+
         .post-body strong {
             color: white;
+            font-weight: 700;
         }
 
         .back-nav {
@@ -127,7 +160,7 @@
             const imgHtml = data.image_url ? `<div class="post-cover-wrapper"><img src="${data.image_url}" class="post-cover" alt="Capa"></div>` : '';
 
             // Format content using Marked.js for full markdown support
-            const formattedContent = marked.parse(data.content || '');
+            const formattedContent = marked.parse(data.content || '', { breaks: true, gfm: true });
 
             container.innerHTML = `
                 <section class="post-header">
