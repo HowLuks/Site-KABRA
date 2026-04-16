@@ -518,14 +518,14 @@ img {
 
 .footer-tagline {
     color: var(--color-details);
-    font-size: 1rem;
+    font-size: 1.15rem;
     line-height: 1.5;
 }
 
 .footer h4 {
     font-family: var(--font-heading);
     color: var(--color-creme);
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     margin-bottom: 1.5rem;
 }
 
@@ -535,7 +535,7 @@ img {
 
 .footer-links ul li a {
     color: var(--color-details);
-    font-size: 1rem;
+    font-size: 1.15rem;
 }
 
 .footer-links ul li a:hover {
@@ -567,7 +567,7 @@ img {
 .footer-bottom {
     text-align: center;
     color: var(--color-details);
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding-top: 2rem;
     border-top: 1px solid rgba(242, 236, 218, 0.05);
 }
