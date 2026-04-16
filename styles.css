@@ -884,3 +884,31 @@ img {
         justify-content: center;
     }
 }
+
+/* =========================================================================
+   TOAST NOTIFICATION
+   ========================================================================= */
+.kabra-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--color-cta);
+    color: var(--color-creme);
+    padding: 1.2rem 1.8rem;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    font-size: 1.05rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    z-index: 10000;
+    transform: translateY(150%);
+    opacity: 0;
+    transition: all var(--ts-smooth);
+    display: flex;
+    align-items: center;
+}
+
+.kabra-toast.active {
+    transform: translateY(0);
+    opacity: 1;
+}

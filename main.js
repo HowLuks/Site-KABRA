@@ -140,7 +140,7 @@ function initializeEvents() {
                     alert("ID não encontrado. A etapa 1 deve ter falhado.");
                 }
 
-                alert('Obrigado! Entraremos em contato em breve.');
+                showToast('Obrigado! Entraremos em contato em breve.');
                 modal.classList.remove('active');
                 form.reset();
                 currentLeadId = null;
@@ -169,7 +169,7 @@ function initializeEvents() {
                     }]);
                 }
 
-                alert('Obrigado! Nossa equipe vai acelerar com você em breve.');
+                showToast('Obrigado! Nossa equipe vai acelerar com você em breve. 🚀');
                 ctaForm.reset();
                 if (btnSubmit) { btnSubmit.disabled = false; btnSubmit.textContent = origText; }
             });
@@ -217,4 +217,24 @@ function initializeEvents() {
             }
         });
     });
+}
+
+// --------------------------------------------------------
+// Função de Notificação (Toast)
+// --------------------------------------------------------
+function showToast(message) {
+    let toast = document.getElementById('kabra-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'kabra-toast';
+        toast.className = 'kabra-toast';
+        document.body.appendChild(toast);
+    }
+    toast.innerHTML = '✅ &nbsp; ' + message;
+    toast.classList.add('active');
+
+    // Remove after 4.5 seconds
+    setTimeout(() => {
+        toast.classList.remove('active');
+    }, 4500);
 }
