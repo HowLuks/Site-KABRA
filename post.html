@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KABRA | Lendo Artigo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .post-header {
+            padding: 150px 0 80px;
+            background: var(--color-bg-darker);
+            border-bottom: 1px solid rgba(242, 236, 218, 0.05);
+            text-align: center;
+        }
+
+        .post-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--color-creme);
+            max-width: 900px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.1;
+        }
+
+        .post-meta {
+            color: var(--color-details);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .post-cover-wrapper {
+            max-width: 1000px;
+            margin: -60px auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .post-cover {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            display: block;
+        }
+
+        .post-body {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 5rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--color-creme);
+        }
+
+        .post-body p {
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body h2 {
+            font-size: 2.2rem;
+            color: var(--color-cta);
+            margin: 3.5rem 0 1.5rem;
+        }
+
+        .post-body h3 {
+            font-size: 1.6rem;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .post-body strong {
+            color: white;
+        }
+
+        .back-nav {
+            margin-top: 5rem;
+            border-top: 1px solid rgba(242, 236, 218, 0.1);
+            padding-top: 3rem;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <main id="single-post-content" style="min-height: 60vh;">
+        <section class="post-header" style="height: 60vh; display:flex; align-items:center; justify-content:center;">
+            <div class="empty-state" style="font-size: 1.5rem;">Carregando artigo...</div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <div id="popup-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('id');
+            const container = document.getElementById('single-post-content');
+
+            if (!postId || !window.supabaseClient) {
+                container.innerHTML = '<section class="post-header"><h1>Artigo não encontrado.</h1><a href="blog.html" class="btn btn-primary" style="margin-top:2rem">Voltar ao Blog</a></section>';
+                return;
+            }
+
+            const { data, error } = await window.supabaseClient
+                .from('blogs')
+                .select('*')
+                .eq('id', postId)
+                .single();
+
+            if (error || !data) {
+                container.innerHTML = '<section class="post-header"><h1>Erro ao carregar artigo.</h1><p>O artigo que você busca pode ter sido removido.</p><a href="blog.html" class="btn btn-primary" style="margin-top:2rem">Voltar ao Blog</a></section>';
+                return;
+            }
+
+            document.title = `KABRA | ${data.title}`;
+
+            const dateStr = new Date(data.created_at).toLocaleDateString('pt-BR');
+            const imgHtml = data.image_url ? `<div class="post-cover-wrapper"><img src="${data.image_url}" class="post-cover" alt="Capa"></div>` : '';
+
+            // Format content: Simple Markdown to HTML
+            // Quebras de linha são tratadas identificando headers com hash e strong com ast.
+            const lines = data.content.split('\\n');
+            const formattedContent = lines.map(p => {
+                let text = p.trim();
+                if (text === '') return '';
+                // Headers básicos
+                if (text.startsWith('## ')) return `<h2>${text.replace('## ', '')}</h2>`;
+                if (text.startsWith('# ')) return `<h2>${text.replace('# ', '')}</h2>`;
+                if (text.startsWith('### ')) return `<h3>${text.replace('### ', '')}</h3>`;
+
+                // Tratar negrito primitivo com asterisco (*) só pro básico do txt do input HTML
+                return `<p>${text}</p>`;
+            }).join('');
+
+            container.innerHTML = `
+                <section class="post-header">
+                    <div class="container">
+                        <div class="post-meta">${dateStr} &bull; Agência KABRA</div>
+                        <h1 class="post-title">${data.title}</h1>
+                    </div>
+                </section>
+                
+                ${imgHtml}
+                
+                <section class="container">
+                    <div class="post-body">
+                        ${formattedContent}
+                        
+                        <div class="back-nav">
+                            <a href="blog.html" class="btn btn-outline" style="border-radius: 4px;">← Explorar mais artigos</a>
+                        </div>
+                    </div>
+                </section>
+            `;
+        });
+    </script>
+</body>
+
+</html>

@@ -302,6 +302,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <input type="text" id="blog-title" class="form-input" required placeholder="Ex: O Futuro do Growth Hacking">
                 </div>
                 <div class="form-group">
+                    <label>URL / Link da Imagem de Capa</label>
+                    <input type="url" id="blog-image" class="form-input" placeholder="https://site.com/imagem.jpg">
+                </div>
+                <div class="form-group">
                     <label>Resumo</label>
                     <input type="text" id="blog-excerpt" class="form-input" required placeholder="Escreva uma breve descrição...">
                 </div>
@@ -327,9 +331,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const title = document.getElementById('blog-title').value;
             const excerpt = document.getElementById('blog-excerpt').value;
             const content = document.getElementById('blog-body').value;
+            const image_url = document.getElementById('blog-image').value;
 
             const { error } = await supabaseClient.from('blogs').insert([{
-                title, excerpt, content, published: true, author_id: currentUser?.id
+                title, excerpt, content, image_url, published: true, author_id: currentUser?.id
             }]);
 
             if (error) {
