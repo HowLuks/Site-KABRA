@@ -19,7 +19,7 @@ export default function Header() {
                 </nav>
 
                 <div className="flex space-x-4 items-center z-10">
-                    <Link href="/#contato" className="hidden md:inline-flex bg-[#FF4719] hover:bg-[#e03810] text-[#F2ECDA] uppercase font-bold text-sm tracking-widest px-8 py-3 rounded transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(255,71,25,0.3)]">
+                    <Link href="https://wa.me/558591927755" className="hidden md:inline-flex bg-[#FF4719] hover:bg-[#e03810] text-[#F2ECDA] uppercase font-bold text-sm tracking-widest px-8 py-3 rounded transition-all hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(255,71,25,0.3)]">
                         Acelerar agora
                     </Link>
                     <button className="md:hidden flex flex-col gap-[5px] bg-transparent border-none cursor-pointer">

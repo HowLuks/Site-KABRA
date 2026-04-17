@@ -11,8 +11,8 @@ export default function Footer() {
                             <img src="/img/footer_logo.png" alt="KABRA Logo Branco" className="block w-full max-w-[250px]" />
                         </Link>
                         <p className="text-[#CCB8A3] text-[1.15rem] leading-relaxed">
-                            Tranquilidade criativa aliada à neurose dos dados.<br />
-                            Acelerando marcas que não aceitam ser a mesma.
+                            Energia para transformar.<br />
+                            Análise para escalar.
                         </p>
                     </div>
 
@@ -38,7 +38,7 @@ export default function Footer() {
                 </div>
 
                 <div className="text-center text-[#CCB8A3] text-[1rem] pt-8 border-t border-[#F2ECDA]/5">
-                    <p>&copy; 2026 Agência KABRA. Todos os direitos reservados. Desenhado para escalar.</p>
+                    <p>&copy; 2026 KABRA MKT. Todos os direitos reservados. </p>
                 </div>
             </div>
         </footer>

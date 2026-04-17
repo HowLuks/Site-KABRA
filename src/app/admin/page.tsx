@@ -15,6 +15,7 @@ export default function AdminPage() {
     const [view, setView] = useState<'dashboard' | 'submissions' | 'blogs'>('dashboard');
     const [submissions, setSubmissions] = useState<any[]>([]);
     const [blogs, setBlogs] = useState<any[]>([]);
+    const [selectedLead, setSelectedLead] = useState<any>(null);
 
     // Blog Edit State
     const [showBlogForm, setShowBlogForm] = useState(false);
@@ -158,13 +159,16 @@ export default function AdminPage() {
                                                     ? <span className="bg-[#FF4719]/20 text-[#FF4719] px-2 py-1 rounded text-xs uppercase border border-[#FF4719]/30">Novo</span>
                                                     : <span className="bg-[#36423A] text-[#CCB8A3] px-2 py-1 rounded text-xs uppercase border border-[#CCB8A3]/30">Visto</span>}
                                             </td>
-                                            <td className="p-4">
+                                            <td className="p-4 flex gap-3 flex-wrap items-center">
                                                 {sub.status === 'new' && (
                                                     <button onClick={async () => {
                                                         await supabase.from('submissions').update({ status: 'read' }).eq('id', sub.id);
                                                         fetchData();
                                                     }} className="text-[#FF4719] text-sm hover:underline font-bold">Marcar Visto</button>
                                                 )}
+                                                <button onClick={() => setSelectedLead(sub)} className="text-[#CCB8A3] text-sm hover:text-[#F2ECDA] border border-[#CCB8A3]/30 px-3 py-1 rounded transition-colors whitespace-nowrap">
+                                                    Ver Detalhes
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -257,6 +261,36 @@ export default function AdminPage() {
                     </div>
                 )}
             </main>
+
+            {/* MODAL DETALHES DO LEAD */}
+            {selectedLead && (
+                <div className="fixed inset-0 bg-[#0F1210]/90 backdrop-blur-sm flex justify-center items-center z-[10000] p-4" onClick={(e) => { if (e.target === e.currentTarget) setSelectedLead(null); }}>
+                    <div className="bg-[#36423A] p-8 rounded-lg w-full max-w-[500px] border-t-4 border-[#FF4719] shadow-2xl relative max-h-[90vh] overflow-y-auto">
+                        <button onClick={() => setSelectedLead(null)} className="absolute top-4 right-5 text-[#CCB8A3] text-3xl leading-none hover:text-[#FF4719]">&times;</button>
+                        <h3 className="text-xl font-heading text-[#F2ECDA] uppercase mb-6 border-b border-[#F2ECDA]/10 pb-4">Detalhes do Lead</h3>
+
+                        <div className="flex flex-col gap-3 text-[#CCB8A3] text-sm">
+                            <p><strong className="text-[#F2ECDA]">Nome:</strong> {selectedLead.name || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">E-mail:</strong> {selectedLead.email || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">Telefone:</strong> {selectedLead.phone || '-'}</p>
+
+                            <div className="h-px bg-[#F2ECDA]/10 my-2"></div>
+
+                            <p><strong className="text-[#F2ECDA]">Empresa:</strong> {selectedLead.company || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">Cargo:</strong> {selectedLead.role || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">Momento:</strong> {selectedLead.classification || selectedLead.role || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">Investimento:</strong> {selectedLead.investment_plan || '-'}</p>
+                            <p><strong className="text-[#F2ECDA]">Faturamento:</strong> {selectedLead.average_revenue || '-'}</p>
+
+                            <div className="h-px bg-[#F2ECDA]/10 my-2"></div>
+
+                            <p className={`font-bold pb-2 ${selectedLead.completed_second_step ? 'text-[#4CAF50]' : 'text-[#f44336]'}`}>
+                                Completou Etapa 2? {selectedLead.completed_second_step ? 'Sim' : 'Não'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
