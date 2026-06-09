@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from './_components/Header';
-import Footer from './_components/Footer';
 import { ToastProvider } from './_components/Toast';
 import { ModalProvider } from './_components/ModalContext';
+import LayoutWrapper from './LayoutWrapper';
 
 export const metadata: Metadata = {
   title: 'KABRA | Agência de Estratégia e Aceleração de Negócios',
@@ -30,9 +29,7 @@ export default function RootLayout({
       <body>
         <ToastProvider>
           <ModalProvider>
-            <Header />
-            {children}
-            <Footer />
+            <LayoutWrapper>{children}</LayoutWrapper>
           </ModalProvider>
         </ToastProvider>
       </body>
