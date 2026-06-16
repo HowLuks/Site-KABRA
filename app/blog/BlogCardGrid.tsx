@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useModal } from '@/app/_components/ModalContext';
+import Link from 'next/link';
 
 type Post = {
   id: string | number;
@@ -13,8 +13,6 @@ type Post = {
 };
 
 export default function BlogCardGrid({ posts }: { posts: Post[] }) {
-  const { openModal } = useModal();
-
   return (
     <div className="blog-grid">
       {posts.map((post) => {
@@ -22,15 +20,7 @@ export default function BlogCardGrid({ posts }: { posts: Post[] }) {
         const postUrl = `/blog/${post.slug || post.id}`;
 
         return (
-          <div
-            key={post.id}
-            className="post-card"
-            role="button"
-            tabIndex={0}
-            onClick={() => openModal({ redirectUrl: postUrl, origin: 'blog' })}
-            onKeyDown={(e) => e.key === 'Enter' && openModal({ redirectUrl: postUrl, origin: 'blog' })}
-            style={{ cursor: 'pointer' }}
-          >
+          <Link key={post.id} href={postUrl} className="post-card">
             {post.image_url ? (
               <img src={post.image_url} className="post-img" alt={post.title} />
             ) : (
@@ -55,7 +45,7 @@ export default function BlogCardGrid({ posts }: { posts: Post[] }) {
               <p className="post-excerpt">{post.excerpt || ''}</p>
               <span className="read-more">Ler artigo completo →</span>
             </div>
-          </div>
+          </Link>
         );
       })}
     </div>
