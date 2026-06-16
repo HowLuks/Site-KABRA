@@ -21,17 +21,15 @@ export default function BlogPostContent({ post }: { post: any }) {
         </div>
       )}
 
-      <section className="container">
-        <div className="post-body">
-          <div dangerouslySetInnerHTML={{ __html: post.content || '' }} />
+      <div className="post-body">
+        <div dangerouslySetInnerHTML={{ __html: post.content || '' }} />
 
-          <div className="back-nav">
-            <Link href="/blog" className="btn btn-outline" style={{ borderRadius: '4px' }}>
-              ← Explorar mais artigos
-            </Link>
-          </div>
+        <div className="back-nav">
+          <Link href="/blog" className="btn btn-outline" style={{ borderRadius: '4px' }}>
+            ← Explorar mais artigos
+          </Link>
         </div>
-      </section>
+      </div>
     </main>
   );
 }

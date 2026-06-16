@@ -1515,9 +1515,9 @@ img {
 main .post-header .post-title {
     font-size: clamp(2rem, 5vw, 3.5rem);
     color: var(--color-creme);
-    max-width: 800px;
+    width: min(800px, 90%);
     margin: 0 auto;
-    line-height: 1.1;
+    line-height: 1.15;
     font-family: var(--font-heading);
 }
 
@@ -1539,10 +1539,8 @@ main .post-header .post-title {
 }
 
 .post-body {
-    max-width: 720px;
-    width: 100%;
+    width: min(720px, 90%);
     margin: 3rem auto 5rem;
-    padding: 0 1.5rem;
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--color-creme);
@@ -1551,7 +1549,6 @@ main .post-header .post-title {
 @media (max-width: 768px) {
     .post-body {
         font-size: 1rem;
-        padding: 0 1rem;
         margin: 2rem auto 4rem;
     }
 }
