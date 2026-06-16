@@ -58,6 +58,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
 }
 
 html {
@@ -1358,6 +1361,12 @@ img {
     border-bottom: 1px solid rgba(242, 236, 218, 0.05);
 }
 
+@media (max-width: 768px) {
+    .blog-header {
+        padding: 90px 0 var(--space-md);
+    }
+}
+
 /* Blog Grid */
 .blog-grid {
     display: grid;
@@ -1391,6 +1400,7 @@ img {
     transition: all var(--ts-smooth);
     border: 1px solid rgba(242, 236, 218, 0.05);
     height: 100%;
+    transform: translateZ(0);
 }
 
 .post-card:hover {
@@ -1519,7 +1529,6 @@ main .post-header .post-title {
 .post-body {
     max-width: 800px;
     margin: 0 auto 5rem;
-    padding: 0 1.5rem;
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--color-creme);

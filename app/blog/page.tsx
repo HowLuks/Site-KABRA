@@ -32,7 +32,7 @@ export default async function BlogList() {
       <section className="blog-header">
         <div className="container">
           <span className="eyebrow">Conteúdo Estratégico</span>
-          <h1 className="section-title text-creme" style={{ fontSize: '3.5rem' }}>
+          <h1 className="section-title text-creme" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}>
             KABRA <span className="text-accent">Blog</span>
           </h1>
           <p className="section-description" style={{ margin: '1rem auto 0', maxWidth: '600px' }}>
@@ -68,7 +68,7 @@ export default async function BlogList() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         background: '#1b201d',
-                        color: 'var(--color-bg-darker)',
+                        color: 'var(--color-cta)',
                         fontFamily: 'var(--font-heading)',
                         fontSize: '2rem',
                       }}
