@@ -3,6 +3,9 @@ import Link from 'next/link';
 
 export default function BlogPostContent({ post }: { post: any }) {
   const dateStr = new Date(post.created_at).toLocaleDateString('pt-BR');
+  const sanitizedContent = (post.content || '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/ /g, ' ');
 
   return (
     <main style={{ minHeight: '80vh' }}>
@@ -22,7 +25,7 @@ export default function BlogPostContent({ post }: { post: any }) {
       )}
 
       <div className="post-body">
-        <div dangerouslySetInnerHTML={{ __html: post.content || '' }} />
+        <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
 
         <div className="back-nav">
           <Link href="/blog" className="btn btn-outline" style={{ borderRadius: '4px' }}>

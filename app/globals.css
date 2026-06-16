@@ -1544,6 +1544,7 @@ main .post-header .post-title {
     font-size: 1.1rem;
     line-height: 1.8;
     color: var(--color-creme);
+    overflow-wrap: break-word;
 }
 
 @media (max-width: 768px) {
