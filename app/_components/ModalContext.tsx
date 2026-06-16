@@ -4,8 +4,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import LeadModal from './LeadModal';
 
+export type ModalOptions = {
+  redirectUrl?: string;
+  origin?: string;
+};
+
 type ModalContextType = {
-  openModal: () => void;
+  openModal: (options?: ModalOptions) => void;
   closeModal: () => void;
 };
 
@@ -13,14 +18,21 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalOptions, setModalOptions] = useState<ModalOptions>({});
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const openModal = (options: ModalOptions = {}) => {
+    setModalOptions(options);
+    setIsOpen(true);
+  };
+  const closeModal = () => {
+    setIsOpen(false);
+    setModalOptions({});
+  };
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <LeadModal isOpen={isOpen} onClose={closeModal} />
+      <LeadModal isOpen={isOpen} onClose={closeModal} {...modalOptions} />
     </ModalContext.Provider>
   );
 }

@@ -1,17 +1,21 @@
 'use strict';
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
 import { useToast } from './Toast';
 
 type LeadModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  redirectUrl?: string;
+  origin?: string;
 };
 
-export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
+export default function LeadModal({ isOpen, onClose, redirectUrl, origin }: LeadModalProps) {
   const { showToast } = useToast();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [leadId, setLeadId] = useState<string | number | null>(null);
@@ -26,14 +30,9 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
   const [investment, setInvestment] = useState('');
   const [revenue, setRevenue] = useState('');
 
-  // Auto-show popup delay (only if not opened manually)
-  useEffect(() => {
-    // Component is instantiated inside layout, so it manages local triggering if needed, 
-    // but here we let the parent control isOpen state.
-  }, []);
+  const isBlogGate = !!redirectUrl;
 
   const handleNextStep = async () => {
-    // Basic validation
     if (!name || !email || !phone) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
@@ -48,7 +47,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
             email,
             name,
             phone,
-            origin: 'popup',
+            origin: origin || 'popup',
             status: 'new',
             completed_second_step: false,
           },
@@ -59,8 +58,13 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
         alert('Erro ao salvar etapa 1: ' + error.message);
         console.error(error);
       } else if (data && data.length > 0) {
-        setLeadId(data[0].id);
-        setStep(2);
+        if (isBlogGate) {
+          handleClose();
+          router.push(redirectUrl!);
+        } else {
+          setLeadId(data[0].id);
+          setStep(2);
+        }
       }
     } catch (err: any) {
       alert('Erro na etapa 1: ' + err.message);
@@ -130,8 +134,12 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
           &times;
         </button>
         <div className="modal-header">
-          <h3 className="modal-title">Acelere seu negócio</h3>
-          <p className="modal-desc">Preencha os dados abaixo e nossa equipe entrará em contato.</p>
+          <h3 className="modal-title">{isBlogGate ? 'Leia o Artigo Completo' : 'Acelere seu negócio'}</h3>
+          <p className="modal-desc">
+            {isBlogGate
+              ? 'Deixe seus dados para continuar lendo. É rápido!'
+              : 'Preencha os dados abaixo e nossa equipe entrará em contato.'}
+          </p>
         </div>
 
         {step === 1 ? (
@@ -179,7 +187,7 @@ export default function LeadModal({ isOpen, onClose }: LeadModalProps) {
               disabled={loading}
               onClick={handleNextStep}
             >
-              {loading ? 'Salvando...' : 'Continuar'}
+              {loading ? 'Salvando...' : isBlogGate ? 'Ler Artigo' : 'Continuar'}
             </button>
           </div>
         ) : (
