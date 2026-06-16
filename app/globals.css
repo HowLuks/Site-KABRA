@@ -58,8 +58,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-wrap: break-word;
-    word-break: break-word;
     min-width: 0;
 }
 
@@ -87,6 +85,17 @@ h6 {
     text-transform: uppercase;
     line-height: 1.1;
     letter-spacing: 0.03em;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+p,
+li,
+td,
+th,
+span,
+blockquote {
+    overflow-wrap: break-word;
 }
 
 a {
@@ -1365,6 +1374,14 @@ img {
     .blog-header {
         padding: 90px 0 var(--space-md);
     }
+
+    .post-header {
+        padding: 90px 0 var(--space-md);
+    }
+
+    .post-cover-wrapper {
+        margin: -1.5rem auto 2.5rem;
+    }
 }
 
 /* Blog Grid */
@@ -1484,7 +1501,7 @@ img {
    ========================================================================= */
 
 .post-header {
-    padding: 120px 0 var(--space-md);
+    padding: 120px 0 var(--space-lg);
     text-align: center;
     background: radial-gradient(circle at center, var(--color-bg-darker) 0%, var(--color-bg-dark) 100%);
     border-bottom: 1px solid rgba(242, 236, 218, 0.05);
@@ -1511,7 +1528,7 @@ main .post-header .post-title {
 
 .post-cover-wrapper {
     max-width: 900px;
-    margin: -3rem auto 3rem;
+    margin: -2rem auto 4rem;
     padding: 0 1.5rem;
     position: relative;
     z-index: 5;
