@@ -1513,7 +1513,7 @@ img {
 
 /* Override title for detail page */
 main .post-header .post-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(1.6rem, 3.5vw, 2.6rem);
     color: var(--color-creme);
     width: min(800px, 90%);
     margin: 0 auto;
