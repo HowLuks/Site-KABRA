@@ -67,6 +67,8 @@ export default function AdminDashboard() {
   const [blogAuthor, setBlogAuthor] = useState('');
   const [blogPublished, setBlogPublished] = useState(true);
   const [blogPublishing, setBlogPublishing] = useState(false);
+  const [blogMaterialUrl, setBlogMaterialUrl] = useState('');
+  const [blogMaterialTitle, setBlogMaterialTitle] = useState('');
 
   // Image Uploader State
   const [mediaFile, setMediaFile] = useState<File | null>(null);
@@ -196,6 +198,8 @@ export default function AdminDashboard() {
       setBlogMetaDesc(post.meta_description || '');
       setBlogAuthor(post.author || '');
       setBlogPublished(post.published ?? true);
+      setBlogMaterialUrl(post.material_url || '');
+      setBlogMaterialTitle(post.material_title || '');
     } else {
       setBlogEditId(null);
       setBlogTitle('');
@@ -206,6 +210,8 @@ export default function AdminDashboard() {
       setBlogMetaDesc('');
       setBlogAuthor('Agência KABRA');
       setBlogPublished(true);
+      setBlogMaterialUrl('');
+      setBlogMaterialTitle('');
     }
     setIsBlogFormOpen(true);
   };
@@ -266,6 +272,8 @@ export default function AdminDashboard() {
         published: blogPublished,
         author: blogAuthor.trim() || null,
         author_id: session?.user?.id,
+        material_url: blogMaterialUrl.trim() || null,
+        material_title: blogMaterialTitle.trim() || null,
       };
 
       let error = null;
@@ -859,6 +867,34 @@ export default function AdminDashboard() {
                             ]
                           }}
                         />
+                      </div>
+
+                      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem', marginTop: '0.5rem' }}>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--color-details)', marginBottom: '1rem' }}>
+                          Material para Download (opcional) — Ao preencher, um formulário de captura aparecerá no final do artigo e liberará o link após o preenchimento.
+                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                          <div className="form-group" style={{ marginBottom: 0 }}>
+                            <label>Link do Material</label>
+                            <input
+                              type="url"
+                              className="form-input"
+                              placeholder="https://drive.google.com/... ou qualquer link"
+                              value={blogMaterialUrl}
+                              onChange={(e) => setBlogMaterialUrl(e.target.value)}
+                            />
+                          </div>
+                          <div className="form-group" style={{ marginBottom: 0 }}>
+                            <label>Título do Material</label>
+                            <input
+                              type="text"
+                              className="form-input"
+                              placeholder="Ex: Planilha de Jornada do Cliente"
+                              value={blogMaterialTitle}
+                              onChange={(e) => setBlogMaterialTitle(e.target.value)}
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div className="form-group" style={{ flexDirection: 'row', alignItems: 'center', gap: '0.8rem', marginTop: '1.5rem', marginBottom: '1.5rem' }}>

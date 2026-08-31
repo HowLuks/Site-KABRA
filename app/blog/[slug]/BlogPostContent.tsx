@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import MaterialDownloadSection from './MaterialDownloadSection';
 
 export default function BlogPostContent({ post }: { post: any }) {
   const dateStr = new Date(post.created_at).toLocaleDateString('pt-BR');
@@ -26,6 +27,14 @@ export default function BlogPostContent({ post }: { post: any }) {
 
       <div className="post-body">
         <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />
+
+        {post.material_url && (
+          <MaterialDownloadSection
+            materialUrl={post.material_url}
+            materialTitle={post.material_title}
+            postSlug={post.slug}
+          />
+        )}
 
         <div className="back-nav">
           <Link href="/blog" className="btn btn-outline" style={{ borderRadius: '4px' }}>
