@@ -49,8 +49,13 @@ export default function Header() {
         <nav className={`nav ${isMenuActive ? 'active' : ''}`}>
           <ul className="nav-list">
             <li>
-              <Link href="/#servicos" onClick={(e) => handleLinkClick(e, '#servicos')} className="nav-link">
+              <Link href="/marketing-para-pequenas-empresas" onClick={() => setIsMenuActive(false)} className="nav-link">
                 Serviços
+              </Link>
+            </li>
+            <li>
+              <Link href="/#servicos" onClick={(e) => handleLinkClick(e, '#servicos')} className="nav-link">
+                Pilares
               </Link>
             </li>
             <li>

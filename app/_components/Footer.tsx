@@ -40,6 +40,11 @@ export default function Footer() {
           <h4>Agência</h4>
           <ul>
             <li>
+              <Link href="/marketing-para-pequenas-empresas">
+                Serviços
+              </Link>
+            </li>
+            <li>
               <Link href="/#servicos" onClick={(e) => handleLinkClick(e, '#servicos')}>
                 Pilares
               </Link>
