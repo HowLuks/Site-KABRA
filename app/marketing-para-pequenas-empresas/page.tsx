@@ -16,11 +16,11 @@ const faqJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: 'Marketing com Escopo Fechado para Pequenas Empresas | KABRA',
+  title: 'Agência de Marketing Digital para Pequenas Empresas | Kabra Marketing',
   description:
     'A KABRA cuida do tráfego e do conteúdo da sua empresa com um plano de trabalho claro, sem letra miúda e sem depender de você entender de marketing para saber se está funcionando.',
   openGraph: {
-    title: 'Marketing com Escopo Fechado para Pequenas Empresas | KABRA',
+    title: 'Agência de Marketing Digital para Pequenas Empresas | Kabra Marketing',
     description:
       'A KABRA cuida do tráfego e do conteúdo da sua empresa com um plano de trabalho claro, sem letra miúda.',
     type: 'website',
