@@ -1,9 +1,22 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import { supabase } from '@/lib/supabaseClient';
 import BlogCardGrid from './BlogCardGrid';
 
 // Force dynamic rendering to fetch the latest blogs on each request
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Blog KABRA | Estratégia e Aceleração de Negócios',
+  description:
+    'Perspectivas não-convencionais, tecnologia e estratégias focadas em aceleração de negócios. Artigos da agência KABRA.',
+  openGraph: {
+    title: 'Blog KABRA | Estratégia e Aceleração de Negócios',
+    description:
+      'Perspectivas não-convencionais, tecnologia e estratégias focadas em aceleração de negócios.',
+    type: 'website',
+  },
+};
 
 export default async function BlogList() {
   let blogs: any[] = [];

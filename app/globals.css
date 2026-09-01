@@ -1188,6 +1188,306 @@ img {
 }
 
 /* =========================================================================
+   SERVICE LANDING PAGE (SVC-*)
+   ========================================================================= */
+.svc-hero {
+    padding: 160px 0 var(--space-xl);
+    position: relative;
+    background: radial-gradient(circle at top right, var(--color-bg-darker), var(--color-bg-dark) 80%);
+    overflow: hidden;
+}
+
+.svc-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+}
+
+.svc-hero-title {
+    font-size: clamp(2rem, 4.2vw, 3.2rem);
+    margin-bottom: 1.5rem;
+    color: var(--color-creme);
+}
+
+.svc-hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-details);
+    max-width: 620px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* Steps ("Como funciona") — timeline / "caminho" layout */
+.svc-path {
+    position: relative;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+.svc-path-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--color-cta) 8%, var(--color-cta) 92%, transparent);
+    transform: translateX(-50%);
+}
+
+.svc-path-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 72px 1fr;
+    grid-template-areas: "media marker text";
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.svc-path-item.reverse {
+    grid-template-areas: "text marker media";
+}
+
+.svc-path-media {
+    grid-area: media;
+    position: relative;
+    width: 100%;
+    height: 220px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(242, 236, 218, 0.08);
+}
+
+.svc-path-marker {
+    grid-area: marker;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--color-cta);
+    color: var(--color-creme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    box-shadow: 0 0 0 8px var(--color-bg-dark);
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+.svc-path-text {
+    grid-area: text;
+}
+
+.svc-path-text h3 {
+    font-size: 1.2rem;
+    color: var(--color-creme);
+    margin-bottom: 0.6rem;
+}
+
+.svc-path-text p {
+    color: var(--color-details);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .svc-path-line {
+        left: 28px;
+    }
+
+    .svc-path-item,
+    .svc-path-item.reverse {
+        grid-template-columns: 56px 1fr;
+        grid-template-areas:
+            "marker text"
+            "media media";
+        gap: 1rem 1.25rem;
+    }
+
+    .svc-path-marker {
+        width: 56px;
+        height: 56px;
+        font-size: 1.2rem;
+        box-shadow: 0 0 0 6px var(--color-bg-dark);
+    }
+
+    .svc-path-media {
+        height: 180px;
+        margin-top: 0.25rem;
+    }
+}
+
+/* Cases */
+.svc-cases {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-creme);
+    color: var(--color-bg-dark);
+}
+
+.svc-cases .eyebrow {
+    color: var(--color-cta);
+}
+
+.svc-cases .section-header .section-title {
+    color: var(--color-bg-dark);
+}
+
+.svc-cases .section-description {
+    color: rgba(37, 43, 39, 0.7);
+}
+
+.svc-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-md);
+}
+
+.svc-case-card {
+    background-color: var(--color-bg-dark);
+    color: var(--color-creme);
+    border-radius: 8px;
+    padding: 2.5rem;
+    border-top: 4px solid var(--color-cta);
+}
+
+.svc-case-name {
+    font-size: 1.4rem;
+    color: var(--color-creme);
+    margin-bottom: 1.25rem;
+}
+
+.svc-case-text {
+    color: var(--color-details);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.75rem;
+}
+
+.svc-case-stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    border-top: 1px solid rgba(242, 236, 218, 0.1);
+    padding-top: 1.25rem;
+}
+
+.svc-case-stat-number {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    color: var(--color-cta);
+    line-height: 1;
+}
+
+.svc-case-stat-label {
+    color: var(--color-details);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+}
+
+/* FAQ */
+.svc-faq {
+    padding: var(--space-xl) 0;
+    background-color: var(--color-creme);
+    color: var(--color-bg-dark);
+}
+
+.svc-faq .eyebrow {
+    color: var(--color-cta);
+}
+
+.svc-faq .section-header .section-title {
+    color: var(--color-bg-dark);
+}
+
+.svc-faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.svc-faq-item {
+    background-color: var(--color-bg-dark);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.svc-faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--color-creme);
+}
+
+.svc-faq-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--color-cta);
+    transition: transform var(--ts-smooth);
+}
+
+.svc-faq-item.active .svc-faq-icon {
+    transform: rotate(45deg);
+}
+
+.svc-faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--ts-smooth), padding var(--ts-smooth);
+    padding: 0 2rem;
+}
+
+.svc-faq-item.active .svc-faq-answer {
+    max-height: 400px;
+    padding: 0 2rem 1.75rem;
+}
+
+.svc-faq-answer p {
+    color: var(--color-details);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .svc-hero {
+        padding: 120px 0 var(--space-lg);
+    }
+
+    .svc-case-card {
+        padding: 2rem;
+    }
+
+    .svc-faq-question {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .svc-faq-item.active .svc-faq-answer {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+/* =========================================================================
    TOAST NOTIFICATION & MISC
    ========================================================================= */
 .kabra-toast {

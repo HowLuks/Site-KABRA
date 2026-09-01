@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
+import { SITE_URL } from '@/lib/site';
 import BlogPostContent from './BlogPostContent';
 import DraftViewer from './DraftViewer';
 
@@ -56,14 +57,52 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const canonicalUrl = `${SITE_URL}/blog/${post.slug || slug}`;
+
   return {
     title: `KABRA | ${post.title}`,
     description: post.meta_description || post.excerpt || 'Lendo artigo no blog da KABRA.',
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `KABRA | ${post.title}`,
       description: post.meta_description || post.excerpt || 'Lendo artigo no blog da KABRA.',
       type: 'article',
+      url: canonicalUrl,
       images: post.image_url ? [{ url: post.image_url }] : [],
+    },
+  };
+}
+
+function buildArticleJsonLd(post: any, slug: string) {
+  const canonicalUrl = `${SITE_URL}/blog/${post.slug || slug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.meta_description || post.excerpt || 'Lendo artigo no blog da KABRA.',
+    image: post.image_url ? [post.image_url] : undefined,
+    datePublished: post.created_at,
+    dateModified: post.updated_at || post.created_at,
+    author: {
+      '@type': 'Organization',
+      name: post.author || 'Agência KABRA',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'KABRA',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/img/logo.png`,
+        width: 1710,
+        height: 272,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
     },
   };
 }
@@ -82,5 +121,13 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   // Otherwise, render full server-side content
-  return <BlogPostContent post={post} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleJsonLd(post, slug)) }}
+      />
+      <BlogPostContent post={post} />
+    </>
+  );
 }
