@@ -20,9 +20,9 @@
     --color-cta: #FF4719;
     --color-cta-hover: #e03810;
 
-    /* Typography */
-    --font-heading: 'Boxing', 'Teko', 'Impact', sans-serif;
-    --font-body: 'Montagu Slab', serif;
+    /* Typography: --font-heading / --font-body are supplied by next/font
+       via the html element's className (see app/fonts.ts + app/layout.tsx),
+       which handles preloading and self-hosting automatically. */
 
     /* Spacing & Layout */
     --container-max: 1200px;
@@ -86,30 +86,6 @@
 /* =========================================================================
    KABRA - DESIGN SYSTEM & STYLES (MERGED PUBLIC & ADMIN)
    ========================================================================= */
-
-@font-face {
-    font-family: 'Boxing';
-    src: url('/fonts/Boxing-Regular.otf');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Boxing';
-    src: url('/fonts/Boxing-Regular.otf');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Montagu Slab';
-    src: url('/fonts/MontaguSlab-VariableFont.ttf');
-    font-weight: 100 900;
-    font-style: normal;
-    font-display: swap;
-}
 
 /* =========================================================================
    RESET & BASE STYLES

@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { motion, useReducedMotion, type Variants } from 'motion/react'
 import Balancer from 'react-wrap-balancer'
 
 import { cn } from '@/lib/utils'
@@ -41,48 +40,84 @@ const variantStyles = {
   },
 } as const
 
-const container: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+// Lightweight scroll-reveal: plain IntersectionObserver + CSS transitions
+// instead of `motion` (framer-motion), which shipped ~76KiB of mostly
+// unused JS for a single fade-in effect and was never fully stable here.
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = React.useState(false)
+
+  React.useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReduced(mql.matches)
+    const handler = (e: MediaQueryListEvent) => setReduced(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
+  }, [])
+
+  return reduced
 }
 
-const item: Variants = {
-  hidden: { opacity: 0, y: 12, filter: 'blur(6px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-}
+function useInView(active: boolean) {
+  const ref = React.useRef<HTMLDivElement>(null)
+  const [inView, setInView] = React.useState(false)
 
-const mediaItem: Variants = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
+  React.useEffect(() => {
+    if (!active) return
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -80px 0px', threshold: 0 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [active])
+
+  return { ref, inView }
 }
 
 function Reveal({
   active,
-  variants,
+  delayMs = 0,
+  distance = 12,
+  blur = 6,
   className,
   children,
 }: Readonly<{
   active: boolean
-  variants?: Variants
+  delayMs?: number
+  distance?: number
+  blur?: number
   className?: string
   children: React.ReactNode
 }>) {
+  const { ref, inView } = useInView(active)
+
   if (!active) return <div className={className}>{children}</div>
 
   return (
-    <motion.div variants={variants ?? item} className={className}>
+    <div
+      ref={ref}
+      className={cn(
+        className,
+        'transition-[opacity,transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+        !inView && 'pointer-events-none',
+      )}
+      style={{
+        transitionDelay: `${delayMs}ms`,
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'none' : `translateY(${distance}px)`,
+        filter: inView ? 'blur(0px)' : `blur(${blur}px)`,
+      }}
+    >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -100,7 +135,7 @@ export function Hero04({
   secondaryCTA,
   variant = 'standard',
 }: Readonly<Hero04Props>) {
-  const reduce = useReducedMotion()
+  const reduce = usePrefersReducedMotion()
   const animate = animation === 'subtle' && !reduce
   const vs = variantStyles[variant]
 
@@ -164,16 +199,12 @@ export function Hero04({
     <section className="bg-background relative isolate w-full overflow-hidden">
       {backgroundElement}
 
-      <motion.div
+      <div
         className={cn(
           'relative z-10 mx-auto grid max-w-6xl grid-cols-1 items-center px-6 lg:grid-cols-2',
           vs.section,
           vs.grid,
         )}
-        variants={animate ? container : undefined}
-        initial={animate ? 'hidden' : false}
-        whileInView={animate ? 'visible' : undefined}
-        viewport={{ once: true, margin: '-80px' }}
       >
         <Reveal
           active={animate}
@@ -184,10 +215,16 @@ export function Hero04({
           {ctasElement}
         </Reveal>
 
-        <Reveal active={animate} variants={mediaItem} className="w-full">
+        <Reveal
+          active={animate}
+          delayMs={150}
+          distance={24}
+          blur={8}
+          className="w-full"
+        >
           {mediaElement}
         </Reveal>
-      </motion.div>
+      </div>
     </section>
   )
 }

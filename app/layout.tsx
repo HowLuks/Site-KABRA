@@ -4,6 +4,7 @@ import { ToastProvider } from './_components/Toast';
 import { ModalProvider } from './_components/ModalContext';
 import LayoutWrapper from './LayoutWrapper';
 import { SITE_URL } from '@/lib/site';
+import { boxing, montaguSlab } from './fonts';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: SITE_URL,
     // TODO: substituir por uma imagem OG dedicada (1200x630) — usando o logo como placeholder.
-    images: [{ url: '/img/logo.png', width: 1710, height: 272, alt: 'KABRA' }],
+    images: [{ url: '/img/logo.png', width: 452, height: 72, alt: 'KABRA' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -54,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={`${boxing.variable} ${montaguSlab.variable}`}>
       <head>
         <script
           type="application/ld+json"

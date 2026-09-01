@@ -42,6 +42,8 @@ export default function Header() {
           <img
             src="/img/logo.png"
             alt="KABRA Logo"
+            width={226}
+            height={36}
             style={{ display: 'block', width: '226px', height: '36px', objectFit: 'contain' }}
           />
         </Link>

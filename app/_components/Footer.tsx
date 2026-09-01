@@ -26,6 +26,8 @@ export default function Footer() {
             <img
               src="/img/Footer logo.png"
               alt="KABRA Logo Footer"
+              width={80}
+              height={96}
               style={{ display: 'block', width: '100%', maxWidth: '250px', height: 'auto', objectFit: 'contain' }}
             />
           </div>
