@@ -3,31 +3,21 @@ export const STEPS = [
     number: '01',
     title: 'Diagnóstico inicial',
     text: 'Entendemos o momento do seu negócio, onde está o gargalo, o que já foi tentado, e o que faz sentido priorizar primeiro.',
-    image: '/img/como-funciona/step-01-diagnostico.webp',
-    imageAlt: 'Estrategista analisando gráficos e anotações em uma mesa de trabalho',
   },
   {
     number: '02',
     title: 'Plano de ação com escopo definido',
     text: 'Você recebe um plano claro de tráfego e conteúdo, sem promessa vaga, com o que será feito e quando.',
-    image: '/img/como-funciona/step-02-plano.webp',
-    imageAlt: 'Mãos escrevendo um plano de ação organizado com post-its em uma mesa',
-    reverse: true,
   },
   {
     number: '03',
     title: 'Execução e acompanhamento',
     text: 'Rodamos as campanhas e produzimos o conteúdo, com relatório periódico em linguagem simples, sem jargão.',
-    image: '/img/como-funciona/step-03-execucao.webp',
-    imageAlt: 'Equipe produzindo conteúdo e acompanhando métricas de campanha',
   },
   {
     number: '04',
     title: 'Ajuste contínuo',
     text: 'Marketing muda com o tempo. Revisamos o que está funcionando e ajustamos o que não está, sem custo extra por isso.',
-    image: '/img/como-funciona/step-04-ajuste.webp',
-    imageAlt: 'Dupla revisando relatório de performance com gráfico de crescimento',
-    reverse: true,
   },
 ];
 

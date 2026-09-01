@@ -1,3 +1,88 @@
+/* Cascade layer order: Tailwind utilities must win over Kabra's own rules
+   below (e.g. its `* { margin: 0; padding: 0; }` reset), otherwise
+   unlayered CSS silently beats every layered Tailwind utility class
+   regardless of specificity — this is what broke mx-auto/px-6/py-* on the
+   imported Hero04 component. Splitting the Tailwind import lets the
+   "kabra" layer sit between "base" and "utilities" in source order, which
+   is what actually pins the order (a later bare `@layer a, b;`
+   redeclaration was not enough on its own). */
+@layer theme, base, kabra, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+
+:root {
+    /* Color Palette */
+    --color-bg-dark: #252B27;
+    --color-bg-darker: #36423A;
+    --color-creme: #F2ECDA;
+    --color-details: #CCB8A3;
+    --color-cta: #FF4719;
+    --color-cta-hover: #e03810;
+
+    /* Typography */
+    --font-heading: 'Boxing', 'Teko', 'Impact', sans-serif;
+    --font-body: 'Montagu Slab', serif;
+
+    /* Spacing & Layout */
+    --container-max: 1200px;
+    --space-sm: 1rem;
+    --space-md: 2.5rem;
+    --space-lg: 5rem;
+    --space-xl: 8rem;
+
+    /* Transitions */
+    --ts-fast: 0.2s ease;
+    --ts-smooth: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+
+    /* shadcn/Tailwind tokens — mapped onto the Kabra palette above so
+       imported shadcn components (Button, Hero04, ...) render on-brand. */
+    --background: var(--color-bg-dark);
+    --foreground: var(--color-creme);
+    --primary: var(--color-cta);
+    --primary-foreground: var(--color-creme);
+    --secondary: var(--color-bg-darker);
+    --secondary-foreground: var(--color-creme);
+    --muted: var(--color-bg-darker);
+    --muted-foreground: var(--color-details);
+    --accent: var(--color-bg-darker);
+    --accent-foreground: var(--color-creme);
+    --destructive: #e5484d;
+    --destructive-foreground: var(--color-creme);
+    --border: rgba(242, 236, 218, 0.12);
+    --input: rgba(242, 236, 218, 0.12);
+    --ring: var(--color-cta);
+    --radius: 0.5rem;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    /* --color-accent intentionally NOT mapped here: Tailwind auto-generates
+       a `.text-accent` utility from it, which collides with Kabra's own
+       pre-existing `.text-accent` class (used on the homepage, blog, etc.)
+       and — since utilities now correctly outrank the kabra layer — would
+       silently override it. Only affects shadcn's `ghost` button variant,
+       which isn't used anywhere yet. */
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+    --font-serif: var(--font-heading);
+}
+
+@layer kabra {
+
 /* =========================================================================
    KABRA - DESIGN SYSTEM & STYLES (MERGED PUBLIC & ADMIN)
    ========================================================================= */
@@ -24,31 +109,6 @@
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
-}
-
-:root {
-    /* Color Palette */
-    --color-bg-dark: #252B27;
-    --color-bg-darker: #36423A;
-    --color-creme: #F2ECDA;
-    --color-details: #CCB8A3;
-    --color-cta: #FF4719;
-    --color-cta-hover: #e03810;
-
-    /* Typography */
-    --font-heading: 'Boxing', 'Teko', 'Impact', sans-serif;
-    --font-body: 'Montagu Slab', serif;
-
-    /* Spacing & Layout */
-    --container-max: 1200px;
-    --space-sm: 1rem;
-    --space-md: 2.5rem;
-    --space-lg: 5rem;
-    --space-xl: 8rem;
-
-    /* Transitions */
-    --ts-fast: 0.2s ease;
-    --ts-smooth: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* =========================================================================
@@ -1220,51 +1280,33 @@ img {
 /* Steps ("Como funciona") — timeline / "caminho" layout */
 .svc-path {
     position: relative;
-    max-width: 980px;
+    max-width: 700px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
+    gap: 2.5rem;
 }
 
 .svc-path-line {
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 50%;
+    left: 28px;
     width: 2px;
     background: linear-gradient(to bottom, transparent, var(--color-cta) 8%, var(--color-cta) 92%, transparent);
-    transform: translateX(-50%);
 }
 
 .svc-path-item {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr 72px 1fr;
-    grid-template-areas: "media marker text";
+    grid-template-columns: 56px 1fr;
     align-items: center;
-    gap: 2.5rem;
-}
-
-.svc-path-item.reverse {
-    grid-template-areas: "text marker media";
-}
-
-.svc-path-media {
-    grid-area: media;
-    position: relative;
-    width: 100%;
-    height: 220px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(242, 236, 218, 0.08);
+    gap: 1.5rem;
 }
 
 .svc-path-marker {
-    grid-area: marker;
-    width: 64px;
-    height: 64px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background-color: var(--color-cta);
     color: var(--color-creme);
@@ -1272,14 +1314,9 @@ img {
     align-items: center;
     justify-content: center;
     font-family: var(--font-heading);
-    font-size: 1.4rem;
-    box-shadow: 0 0 0 8px var(--color-bg-dark);
-    margin: 0 auto;
+    font-size: 1.2rem;
+    box-shadow: 0 0 0 6px var(--color-bg-dark);
     flex-shrink: 0;
-}
-
-.svc-path-text {
-    grid-area: text;
 }
 
 .svc-path-text h3 {
@@ -1292,33 +1329,6 @@ img {
     color: var(--color-details);
     font-size: 0.95rem;
     line-height: 1.7;
-}
-
-@media (max-width: 900px) {
-    .svc-path-line {
-        left: 28px;
-    }
-
-    .svc-path-item,
-    .svc-path-item.reverse {
-        grid-template-columns: 56px 1fr;
-        grid-template-areas:
-            "marker text"
-            "media media";
-        gap: 1rem 1.25rem;
-    }
-
-    .svc-path-marker {
-        width: 56px;
-        height: 56px;
-        font-size: 1.2rem;
-        box-shadow: 0 0 0 6px var(--color-bg-dark);
-    }
-
-    .svc-path-media {
-        height: 180px;
-        margin-top: 0.25rem;
-    }
 }
 
 /* Cases */
@@ -1987,5 +1997,9 @@ main .post-header .post-title {
         padding: 1.5rem;
     }
 }
+
+} /* end @layer kabra */
+
+@import "tailwindcss/utilities.css" layer(utilities);
 
 

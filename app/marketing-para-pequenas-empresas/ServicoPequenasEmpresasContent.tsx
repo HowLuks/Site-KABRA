@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import { Hero04 } from '@/components/ui/hero-04';
 import { useModal } from '../_components/ModalContext';
 import { STEPS, FAQS } from './data';
 
@@ -22,30 +22,29 @@ export default function ServicoPequenasEmpresasContent() {
   return (
     <main>
       {/* SEÇÃO 1 — Hero */}
-      <section className="svc-hero">
-        <div className="container svc-hero-content">
-          <h1 className="svc-hero-title">
-            Marketing com escopo fechado para quem tem negócio pequeno e não pode gastar errado
-          </h1>
-          <p className="svc-hero-subtitle">
-            A Kabra cuida do tráfego e do conteúdo da sua empresa com um plano de trabalho claro, sem letra miúda e
-            sem depender de você entender de marketing para saber se está funcionando.
-          </p>
-          <div className="hero-actions">
-            <button onClick={handleCtaClick('lp-pequenas-empresas-hero')} className="btn btn-primary btn-large">
-              Falar com a Kabra
-            </button>
-            <a href="#como-funciona" className="btn btn-outline btn-large">
-              Ver como funciona
-            </a>
-          </div>
-        </div>
-
-        <div className="grafismo grafismo-passaro"></div>
-        <div className="grafismo grafismo-4"></div>
-        <div className="hero-decor decor-1"></div>
-        <div className="hero-decor decor-2"></div>
-      </section>
+      <Hero04
+        title="Marketing com escopo fechado"
+        titleLine2="para quem tem negócio pequeno e não pode gastar errado"
+        description="A Kabra cuida do tráfego e do conteúdo da sua empresa com um plano de trabalho claro, sem letra miúda e sem depender de você entender de marketing para saber se está funcionando."
+        primaryImage="/img/hero/team-debating.webp"
+        secondaryImage="/img/hero/raio-3d.webp"
+        primaryAlt="Equipe da Kabra debatendo estratégia de marketing em volta de uma mesa"
+        secondaryAlt="Logo 3D do raio da identidade visual da Kabra"
+        animation="none"
+        primaryCTA={{
+          ctaEnabled: true,
+          text: 'Falar com a Kabra',
+          variant: 'default',
+          size: 'lg',
+          onClick: handleCtaClick('lp-pequenas-empresas-hero'),
+        }}
+        secondaryCTA={{
+          ctaEnabled: true,
+          text: 'Ver como funciona',
+          link: '#como-funciona',
+          variant: 'link',
+        }}
+      />
 
       {/* SEÇÃO 2 — O problema que a gente resolve */}
       <section id="problema" className="manifesto" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -89,16 +88,7 @@ export default function ServicoPequenasEmpresasContent() {
           <div className="svc-path">
             <div className="svc-path-line"></div>
             {STEPS.map((step) => (
-              <div className={`svc-path-item ${step.reverse ? 'reverse' : ''}`} key={step.number}>
-                <div className="svc-path-media">
-                  <Image
-                    src={step.image}
-                    alt={step.imageAlt}
-                    fill
-                    sizes="(max-width: 900px) 90vw, 420px"
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
+              <div className="svc-path-item" key={step.number}>
                 <span className="svc-path-marker">{step.number}</span>
                 <div className="svc-path-text">
                   <h3>{step.title}</h3>
